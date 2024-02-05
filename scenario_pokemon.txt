@@ -1,0 +1,16 @@
+Plan :
+
+- Répartition générales des types
+- Statistiques de base de chaque type
+- Performances stratégiques de chaque type pour chaque tier
+- Le type ultime
+
+
+Scénarios :
+
+- Montrer le type dominant / le type le plus fréquemment rencontré :  Diagramme camembert
+- Montrer quel type a la meilleure base stats avec l'ensemble de ces pokémons : Diagramme en barres 
+- Montrer le meilleur type par tier stratégique : Diagramme en barres groupées
+- Montrer le meilleur type ultime quelque soit le tier stratégique : Diagramme en toile d'araignée
+
+PS : Les types de diagrammes sont facultatifs j'en ai juste mis des différents
