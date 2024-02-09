@@ -15,7 +15,7 @@ function Home() {
     <div className='background-container'>
       <img src={Background} alt='Background' className='background-image' />
       <div className='logo-container'>
-        <img src={Logo} alt='Logo' />
+        <img src={Logo} alt='Logo' className='logo' />
       </div>
 
         <div className='pokemon-container'>
@@ -24,7 +24,7 @@ function Home() {
           <img src={Deerling} alt='Deerling' className='deerling' />
           <img src={Persian} alt='Persian' className='persian' />
           <img src={Ponyta} alt='Ponyta' className='ponyta' />
-          {/* <img src={Tepig} alt='Tepig' className='tepig' /> */}
+          <img src={Tepig} alt='Tepig' className='tepig' />
 
         </div>
     </div>
