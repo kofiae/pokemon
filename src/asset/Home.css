@@ -71,7 +71,14 @@
 
 .ponyta {
     position: absolute;
-    top: 72%;
+    top: 75%;
     left: 15%;   
+    width: 39vi;
+}
+
+.ponytastats {
+    position: absolute;
+    top: 70%;
+    left: 50%;   
     width: 40vi;
 }
