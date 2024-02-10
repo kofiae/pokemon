@@ -17,6 +17,10 @@ function Home() {
     setPonytaStatsVisible(!ponytaStatsVisible);
   };
 
+  const openLink = () => {
+    window.location.href = '/types'
+  }
+
   return (
     <div className='background-container'>
       <img src={Background} alt='Background' className='background-image' />
@@ -37,7 +41,7 @@ function Home() {
         />
         <img src={Tepig} alt='Tepig' className='tepig' />
         {ponytaStatsVisible && (
-          <img src={PonytaStats} alt='PonytaStats' className='ponytastats' />
+          <img src={PonytaStats} alt='PonytaStats' className='ponytastats' onClick={openLink}/>
         )}
       </div>
     </div>
