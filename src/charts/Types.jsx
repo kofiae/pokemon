@@ -70,6 +70,7 @@ function StatTypePresence() {
     const options = {
         chart: {
             type: "pie",
+            height: "100%",
         },
         title: {
             text: "Type de pokemons",
@@ -82,21 +83,14 @@ function StatTypePresence() {
     };
 
     return(
-        <div>
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-            />
-            {tiers.map((tier) => (
-                
-                <a href={`/stat-type-presence?tier=${tier}`}>
-                    <button>
-                        {tier}
-                    </button>
-                </a>
-            ))}
-            
-        </div>
+<div className='chart-container'>
+    <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+    />
+
+</div>
+
     );
 }
 
