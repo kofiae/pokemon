@@ -18,7 +18,8 @@ import Psychic from '../asset/images/types/psychc.png';
 import Rock from '../asset/images/types/rock.png';
 import Steel from '../asset/images/types/steel.png';
 import Water from '../asset/images/types/water.png';
-import Pokemon from '../asset/images/pokemon.jpg';
+
+import StatTypePresence from '../charts/Types';
 
 function Types() {
   return (
@@ -45,6 +46,7 @@ function Types() {
         <img src={Steel} alt="Steel" className="type" />
         <img src={Water} alt="Water" className="type" />
       </div>
+      <StatTypePresence />
     </div>
   );
 }

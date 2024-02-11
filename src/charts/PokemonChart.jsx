@@ -1,113 +1,100 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
-import '../asset/Pokemon.css';
+import Papa from 'papaparse';
+import PokemonData from './Smogon.csv';
 
 function PokemonChart() {
     const [currentTier, setCurrentTier] = useState('');
     const [buttonColors, setButtonColors] = useState({});
 
-        function cleanType(type) {
-            return type ? type.trim() : null;
-        }
-    
-        function handleTierChange(tier) {
-            setCurrentTier(tier);
-        }
+    // Déplacer fetchAndDrawChart à l'extérieur de useEffect
+    async function fetchAndDrawChart(tier, color) {
+        const response = await fetch(PokemonData);
+        const reader = response.body.getReader();
+        const result = await reader.read();
+        const decoder = new TextDecoder('utf-8');
+        const csv = decoder.decode(result.value);
+
+        Papa.parse(csv, {
+            complete: (result) => {
+                const data = result.data;
+
+                // Votre logique de traitement des données et de création du graphique ici
+                const header = data[0].map(column => column.trim());
+                const filteredPokemon = data.slice(1).filter(pokemon => pokemon[header.indexOf('Tier')] === tier);
+                const typeCounts = {};
+                filteredPokemon.forEach(pokemon => {
+                    const type1 = cleanType(pokemon[header.indexOf('Type.1')]);
+                    const type2 = cleanType(pokemon[header.indexOf('Type.2')]);
+
+                    if (type1) {
+                        typeCounts[type1] = (typeCounts[type1] || 0) + 1;
+                    }
+
+                    if (type2) {
+                        typeCounts[type2] = (typeCounts[type2] || 0) + 1;
+                    }
+                });
+
+                const sortedTypeCounts = Object.entries(typeCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .reduce((acc, [type, count]) => {
+                        acc[type] = count;
+                        return acc;
+                    }, {});
+
+                const chartData = Object.entries(sortedTypeCounts).map(([type, count]) => ({ name: type, y: count }));
+
+                Highcharts.chart('pokemonChart', {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: `Pokémon Types in ${tier} Tier`
+                    },
+                    xAxis: {
+                        categories: Object.keys(sortedTypeCounts),
+                        title: {
+                            text: 'Types'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Count'
+                        }
+                    },
+                    series: [{
+                        name: 'Count',
+                        data: Object.values(sortedTypeCounts),
+                        color: color
+                    }],
+                    plotOptions: {
+                        bar: {
+                            color: color
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                });
+            },
+            header: true,
+        });
+    }
 
     useEffect(() => {
-        // Charger les données CSV et créer le graphique
-        function loadAndDrawChart(tier, color) {
-            fetch('../../Smogon.csv')
-                .then(response => response.text())
-                .then(csvData => {
-                    // Parse les données CSV
-                    const rows = csvData.split('\n');
-                    const header = rows[0].split(',').map(column => column.trim());
-                    const data = rows.slice(1).map(row => row.split(','));
+        // Ne pas appeler fetchAndDrawChart ici pour éviter de déclencher involontairement le chargement du graphique au montage
+    }, []);
 
-                    // Filtrer les données pour n'inclure que les Pokémon du tier spécifié
-                    const filteredPokemon = data.filter(pokemon => pokemon[header.indexOf('Tier')] === tier);
+    function cleanType(type) {
+        return type ? type.trim() : null;
+    }
 
-                    // Créer un objet pour stocker les types de Pokémon
-                    const typeCounts = {};
+    function handleTierChange(tier) {
+        setCurrentTier(tier);
+        fetchAndDrawChart(tier, buttonColors[tier]);
+    }
 
-                    // Parcourir les données pour chaque Pokémon du tier spécifié
-                    filteredPokemon.forEach(pokemon => {
-                        const type1 = cleanType(pokemon[header.indexOf('Type.1')]);
-                        const type2 = cleanType(pokemon[header.indexOf('Type.2')]);
-
-                        if (type1) {
-                            typeCounts[type1] = (typeCounts[type1] || 0) + 1;
-                        }
-
-                        if (type2) {
-                            typeCounts[type2] = (typeCounts[type2] || 0) + 1;
-                        }
-                    });
-
-                    // Trier les données par ordre décroissant
-                    const sortedTypeCounts = Object.entries(typeCounts)
-                        .sort((a, b) => b[1] - a[1])
-                        .reduce((acc, [type, count]) => {
-                            acc[type] = count;
-                            return acc;
-                        }, {});
-
-                    // Créer les données pour le graphique
-                    const chartData = Object.entries(sortedTypeCounts).map(([type, count]) => ({ name: type, y: count }));
-
-                    // Afficher le graphique en camembert
-                    Highcharts.chart('pokemonChart', {
-                        chart: {
-                            type: 'bar'
-                        },
-                        title: {
-                            text: `Pokémon Types in ${tier} Tier`
-                        },
-                        xAxis: {
-                            categories: Object.keys(sortedTypeCounts),
-                            title: {
-                                text: 'Types'
-                            }
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Count'
-                            }
-                        },
-                        series: [{
-                            name: 'Count',
-                            data: Object.values(sortedTypeCounts),
-                            color: color // Appliquer la couleur du bouton aux barres du diagramme
-                        }],
-                        plotOptions: {
-                            bar: {
-                                color: color // Couleur fixe pour toutes les barres
-                            }
-                        },
-                        credits: {
-                            enabled: false // Désactiver les crédits de Highcharts
-                        }
-                    });
-                });
-        }
-
-        // Fonction pour nettoyer les noms de types
-        function cleanType(type) {
-            return type ? type.trim() : null;
-        }
-
-        // Gestionnaire d'événement pour le changement de tier
-        function handleTierChange(tier) {
-            setCurrentTier(tier);
-            loadAndDrawChart(tier, buttonColors[tier]);
-        }
-
-        // Initialiser avec le tier par défaut (OU)
-        handleTierChange('OU');
-    }, []); // exécuté une seule fois lors du montage
-
-    // Fonction pour stocker la couleur du bouton lorsqu'il est cliqué
     function handleButtonClick(tier, color) {
         setButtonColors(prevState => ({
             ...prevState,
