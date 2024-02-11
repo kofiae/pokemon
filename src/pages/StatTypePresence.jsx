@@ -6,7 +6,6 @@ import { type } from "@testing-library/user-event/dist/type";
 
 function StatTypePresence() {
 
-    // Récupérer les données des types de pokemons dans .../Smogon.csv
     const csvFilePath = require('../asset/Smogon.csv');
     const [data, setData] = React.useState([]);
     const [stats, setStats] = React.useState({});
@@ -27,6 +26,7 @@ function StatTypePresence() {
     }
 
     React.useEffect(() => {
+
         Papa.parse(csvFilePath, {
             header: true,
             download: true,
@@ -71,14 +71,15 @@ function StatTypePresence() {
         series: [
             {
                 name: "Stat moyenne",
-                type: 'column',
-                data: Object.entries(stats).map(([type, presence]) => ({ name: type, y: presence/types[type] })),
+                type: 'bar',
+                data: Object.entries(stats).map(([type, presence]) => ({ name: type, y: presence/types[type]  }))
+                .sort((a, b) => (a.y > b.y ? -1 : 1)),
             }
         ],
         plotOptions: {
-            column: {
+            series: {
                 colorByPoint: true,
-            },
+            }
         },
         yAxis: {
             title: {
