@@ -2,7 +2,6 @@ import React from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import Papa from "papaparse";
-import { type } from "@testing-library/user-event/dist/type";
 
 function StatTypePresence() {
 
@@ -21,6 +20,8 @@ function StatTypePresence() {
     ]);
     const queryParameters = new URLSearchParams(window.location.search)
     var tier = queryParameters.get('tier');
+
+    var sens = Object.entries(stats).map(([type, presence]) => ({ name: type, y: presence/types[type]  })).sort((a, b) => (a.y > b.y ? -1 : 1)).map((type) => type.name);
     if (tier === null) {
         tier = ("untiered");
     }
@@ -72,8 +73,13 @@ function StatTypePresence() {
             {
                 name: "Stat moyenne",
                 type: 'bar',
-                data: Object.entries(stats).map(([type, presence]) => ({ name: type, y: presence/types[type]  }))
-                .sort((a, b) => (a.y > b.y ? -1 : 1)),
+                // doit ordonnée en fonction de la variable sens qui regroupe les types par ordre de présence
+                data: Object.entries(stats).map(([type, presence]) => ({ name: type, y: presence/types[type]  })).sort((a, b) => (sens.indexOf(a.name) < sens.indexOf(b.name) ? -1 : 1)),
+            }, 
+            {
+                name: "Nombre de pokemon",
+                type: 'bar',
+                data: Object.entries(types).map(([type, presence]) => ({ name: type, y: presence  })).sort((a, b) => (sens.indexOf(a.name) < sens.indexOf(b.name) ? -1 : 1)),
             }
         ],
         plotOptions: {
@@ -90,7 +96,7 @@ function StatTypePresence() {
             title: {
                 text: "Type",
             },
-            categories: Object.keys(stats),
+            categories: sens,
         },
     };
 
