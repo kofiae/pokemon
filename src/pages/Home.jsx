@@ -33,15 +33,17 @@ function Home() {
         <img src={Bulbasaur} alt='Bulbasaur' className='bulbasaur' />
         <img src={Deerling} alt='Deerling' className='deerling' />
         <img src={Persian} alt='Persian' className='persian' />
-        <img
-          src={Ponyta}
-          alt='Ponyta'
-          className='ponyta'
-          onClick={togglePonytaStatsVisibility}
-        />
+        <a>
+          <img
+            src={Ponyta}
+            alt='Ponyta'
+            className='ponyta'
+            onClick={togglePonytaStatsVisibility}
+          />
+        </a>
         <img src={Tepig} alt='Tepig' className='tepig' />
         {ponytaStatsVisible && (
-          <img src={PonytaStats} alt='PonytaStats' className='ponytastats' onClick={openLink}/>
+          <a><img src={PonytaStats} alt='PonytaStats' className='ponytastats' onClick={openLink}/></a>
         )}
       </div>
     </div>

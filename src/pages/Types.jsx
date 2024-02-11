@@ -22,8 +22,8 @@ import Pokemon from '../asset/images/pokemon.jpg';
 
 function Types() {
   return (
-    <div className='background-container'>
-      <img src={Pokemon} alt='Background' className='background-image' />
+    <div className='background-cont'>
+      {/* <img src={Pokemon} alt='Background' className='background-img' /> */}
 
       <div className="types-container" id='border'>
         <img src={Bug} alt="Bug" className="type" />

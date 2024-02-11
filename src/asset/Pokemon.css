@@ -1,0 +1,58 @@
+/* Style des boutons */
+button {
+    background-color: transparent;
+    border: 1px solid #000;
+    color: #000;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 2rem;
+    transition: background-color 0.3s, color 0.3s;
+    margin-left: 5rem;
+}
+
+/* Styles spécifiques pour chaque tier */
+.ou-button {
+    background-color: #FF4136; /* Rouge */
+}
+
+.ou-button:hover {
+    background-color: #FF725C; /* Rouge clair */
+    color: #FFF;
+}
+
+.uu-button {
+    background-color: #0074D9; /* Bleu */
+}
+
+.uu-button:hover {
+    background-color: #7FDBFF; /* Bleu clair */
+    color: #FFF;
+}
+
+.ru-button {
+    background-color: #FF851B; /* Orange */
+}
+
+.ru-button:hover {
+    background-color: #FFA64F; /* Orange clair */
+    color: #FFF;
+}
+
+.nu-button {
+    background-color: #B10DC9; /* Violet */
+}
+
+.nu-button:hover {
+    background-color: #DA77FF; /* Violet clair */
+    color: #FFF;
+}
+
+.pu-button {
+    background-color: #2ECC40; /* Vert */
+}
+
+.pu-button:hover {
+    background-color: #6BFF7C; /* Vert clair */
+    color: #FFF;
+}
