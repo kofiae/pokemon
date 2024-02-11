@@ -1,6 +1,7 @@
 import './asset/App.css';
 import Home from './pages/Home';
 import Types from './pages/Types';
+import StatTypePresence from './pages/StatTypePresence';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
         <>
           <Route path="/" element={<Home />} />
           <Route path="/types" element={<Types />} />
+          <Route path="/stat-type-presence" element={<StatTypePresence />} />
         </>
       </Routes>
     </Router>
