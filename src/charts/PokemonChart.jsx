@@ -35,63 +35,64 @@ function StartBestType() {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(csvFilePath);
-            const csvData = await response.text();
-            const parsedData = Papa.parse(csvData, { header: true }).data;
+        Papa.parse(csvFilePath, {
+            header: true,
+            download: true,
+            skipEmptyLines: true,
+            complete: (result) => {
+                const data = result.data;
+                console.log(data);
+                const typeAppearances = {};
+                const tiers = ['Uber', 'OU', 'UU', 'RU', 'NU', 'PU'];
+                const tierPoints = { 'Uber': 6, 'OU': 5, 'UU': 4, 'RU': 3, 'NU': 2, 'PU': 1 };
+                const seenPokemon = new Set();
 
-            const typeAppearances = {};
-            const tiers = ['Uber', 'OU', 'UU', 'RU', 'NU', 'PU'];
-            const tierPoints = { 'Uber': 6, 'OU': 5, 'UU': 4, 'RU': 3, 'NU': 2, 'PU': 1 };
-            const seenPokemon = new Set();
-
-            for (const tier of tiers) {
-                for (const pokemon of parsedData) {
-                    console.log(pokemon);
-                    if (tiers.includes(pokemon['Tier']) && !seenPokemon.has(pokemon['Name'])) {
-                        seenPokemon.add(pokemon['Name']);
-                        const types = [pokemon['Type_1'], pokemon['Type_2']].filter(type => type && type !== "");
-                        for (const type of types) {
-                            typeAppearances[type] = (typeAppearances[type] || 0) + 1;
+                for (const tier of tiers) {
+                    for (const pokemon of data) {
+                        if (tiers.includes(pokemon['Tier']) && !seenPokemon.has(pokemon['Name'])) {
+                            seenPokemon.add(pokemon['Name']);
+                            const types = [pokemon['Type_1'], pokemon['Type_2']].filter(type => type && type !== "");
+                            for (const type of types) {
+                                typeAppearances[type] = (typeAppearances[type] || 0) + 1;
+                            }
                         }
                     }
                 }
-            }
 
-            const leastAppearances = Math.min(...Object.values(typeAppearances));
+                const leastAppearances = Math.min(...Object.values(typeAppearances));
 
-            for (const type in typeAppearances) {
-                typeAppearances[type] = Math.min(typeAppearances[type], leastAppearances);
-            }
-
-            const newPoints = {};
-            for (const type in typeAppearances) {
-                let remainingAppearances = typeAppearances[type];
-                let totalPoints = 0;
-
-                for (const tier of tiers) {
-                    const appearancesInTier = parsedData.filter(pokemon => pokemon['Tier'] === tier && (pokemon['Type_1'] === type || pokemon['Type_2'] === type)).length;
-
-                    if (remainingAppearances >= appearancesInTier) {
-                        totalPoints += appearancesInTier * tierPoints[tier];
-                        remainingAppearances -= appearancesInTier;
-                    } else {
-                        totalPoints += remainingAppearances * tierPoints[tier];
-                        break;
-                    }
+                for (const type in typeAppearances) {
+                    typeAppearances[type] = Math.min(typeAppearances[type], leastAppearances);
                 }
 
-                newPoints[type] = totalPoints;
+                const newPoints = {};
+                for (const type in typeAppearances) {
+                    let remainingAppearances = typeAppearances[type];
+                    let totalPoints = 0;
+
+                    for (const tier of tiers) {
+                        const appearancesInTier = data.filter(pokemon => pokemon['Tier'] === tier && (pokemon['Type_1'] === type || pokemon['Type_2'] === type)).length;
+
+                        if (remainingAppearances >= appearancesInTier) {
+                            totalPoints += appearancesInTier * tierPoints[tier];
+                            remainingAppearances -= appearancesInTier;
+                        } else {
+                            totalPoints += remainingAppearances * tierPoints[tier];
+                            break;
+                        }
+                    }
+
+                    newPoints[type] = totalPoints;
+                }
+
+                const newSortedTypes = Object.entries(newPoints).map(([type, value]) => ({ name: type, y: value })).sort((a, b) => (a.y > b.y ? -1 : 1)).map((type) => type.name);
+
+
+                setPoints(newPoints);
+                setSortedTypes(newSortedTypes);
+                console.log(sortedTypes)
             }
-
-            const newSortedTypes = Object.entries(newPoints ).map(([type, value]) => ({ name: type, y: value })).sort((a, b) => (a.y > b.y ? -1 : 1)).map((type) => type.name);
-
-
-            setPoints(newPoints);
-            setSortedTypes(newSortedTypes);
-        };
-
-        fetchData();
+        })
     }, []);
 
 
@@ -126,7 +127,7 @@ function StartBestType() {
     };
 
     return (
-        <div id="container" style={{height: 900}}>
+        <div id="container" style={{ height: 3000 }}>
             <HighchartsReact
                 highcharts={Highcharts}
                 options={options}
