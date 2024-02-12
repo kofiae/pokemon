@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import Papa from "papaparse";
+import Arrow from '../asset/images/right.png'
 
 function StatTypePresence() {
 
@@ -71,6 +72,7 @@ function StatTypePresence() {
         chart: {
             type: "pie",
             height: "100%",
+            paddingRight: 2000
         },
         title: {
             text: "Type de pokemons",

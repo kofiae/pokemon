@@ -33,7 +33,7 @@ function Types() {
     window.location.href = '/types/chart';
   };
   return (
-    <div className='cont' onClick={toggleVisibility}>
+    <div className='cont' onClick={openLink}>
       <img src={Pokemon} alt='Background' className='background-img' />
       {!isVisible && (
       <div className="types-cont">
