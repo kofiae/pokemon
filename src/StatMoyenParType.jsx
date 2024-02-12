@@ -5,7 +5,7 @@ import Papa from "papaparse";
 
 function StatTypePresence() {
 
-    const csvFilePath = require('../asset/Smogon.csv');
+    const csvFilePath = require('./asset/Smogon.csv');
     const [data, setData] = React.useState([]);
     const [stats, setStats] = React.useState({});
     const [types, setTypes] = React.useState({});
@@ -103,13 +103,14 @@ function StatTypePresence() {
 
     return(
         <div>
+            <h1>2</h1>
             <HighchartsReact
                 highcharts={Highcharts}
                 options={options}
             />
             {tiers.map((tier) => (
                 
-                <a href={`/stat-type-presence?tier=${tier}`}>
+                <a href={`/types/chart?tier=${tier}`}>
                     <button>
                         {tier}
                     </button>
