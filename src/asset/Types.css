@@ -45,26 +45,7 @@
   display: block;
   z-index: 1;
 }
-.chart {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 70%;
-  height: 100%;
-  display: block;
-  z-index: 1;
-}
 
-.chart-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.chart-container img {
-  display: flex;
-  align-items: right;
-  justify-content: right;
+.expl {
+  width: 90vi;
 }

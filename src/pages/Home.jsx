@@ -177,7 +177,7 @@ function Home() {
   };
 
   const openLink = () => {
-    window.location.href = '/types';
+    window.location.href = '/stats';
   };
 
   return (

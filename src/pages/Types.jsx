@@ -30,7 +30,7 @@ function Types() {
   };
 
   const openLink = () => {
-    window.location.href = '/types/chart';
+    window.location.href = '/pokemon';
   };
   return (
     <div className='cont' onClick={openLink}>

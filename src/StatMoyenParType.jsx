@@ -2,6 +2,7 @@ import React from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import Papa from "papaparse";
+import Button from '@mui/material/Button';
 
 function StatTypePresence() {
 
@@ -103,17 +104,16 @@ function StatTypePresence() {
 
     return(
         <div>
-            <h1>2</h1>
             <HighchartsReact
                 highcharts={Highcharts}
                 options={options}
             />
             {tiers.map((tier) => (
                 
-                <a href={`/types/chart?tier=${tier}`}>
-                    <button>
+                <a href={`/pokemon?tier=${tier}`}>
+                    <Button style={{ backgroundColor: "white", color: "black", border: "1px solid", margin: "10px"}}>
                         {tier}
-                    </button>
+                    </Button>
                 </a>
             ))}
             
