@@ -127,7 +127,7 @@ function StartBestType() {
     };
 
     return (
-        <div id="container" style={{ height: 3000 }}>
+        <div id="container">
             <HighchartsReact
                 highcharts={Highcharts}
                 options={options}

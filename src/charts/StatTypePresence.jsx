@@ -53,7 +53,7 @@ function StatTypePresence() {
             type: "pie",
         },
         title: {
-            text: "Type de pokemons",
+            text: "Répartition générales des types",
         },
         series: [
             {

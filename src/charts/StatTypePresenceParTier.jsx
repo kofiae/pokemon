@@ -20,7 +20,10 @@ function StatTypePrecenceParTier() {
         "PU",
     ]);
     const queryParameters = new URLSearchParams(window.location.search)
-    const tier = queryParameters.get('tier');
+    var tier = queryParameters.get('tier');
+    if (tier === null) {
+        tier = "untiered";
+    }
 
     React.useEffect(() => {
         Papa.parse(csvFilePath, {
@@ -62,7 +65,7 @@ function StatTypePrecenceParTier() {
             type: "pie",
         },
         title: {
-            text: "Type de pokemons",
+            text: "Classement d'apparition des types en fonctions des tiers stratégiques",
         },
         series: [
             {

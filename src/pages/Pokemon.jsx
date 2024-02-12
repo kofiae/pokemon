@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Pokemoni from '../asset/images/pokemon.jpg';
-
+import StartBestType from '../charts/PokemonChart';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Pokemon() {
   return (
-    <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Stack spacing={2}>
         <Stack spacing={2} direction="row">
           <Item>
@@ -30,6 +30,9 @@ function Pokemon() {
         <Item>
           <StatMoyenParType />
         </Item>
+        <Item>
+          <StartBestType />
+      </Item>
       </Stack>
       <img src={Pokemoni} alt='Background' className='background-img' style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', zIndex: '-1' }} />
     </Box>
