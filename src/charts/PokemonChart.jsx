@@ -84,7 +84,8 @@ function StartBestType() {
                 newPoints[type] = totalPoints;
             }
 
-            const newSortedTypes = Object.keys(newPoints).sort((a, b) => newPoints[b] - newPoints[a]);
+            const newSortedTypes = Object.entries(newPoints ).map(([type, value]) => ({ name: type, y: value })).sort((a, b) => (a.y > b.y ? -1 : 1)).map((type) => type.name);
+
 
             setPoints(newPoints);
             setSortedTypes(newSortedTypes);
@@ -125,7 +126,7 @@ function StartBestType() {
     };
 
     return (
-        <div id="container">
+        <div id="container" style={{height: 900}}>
             <HighchartsReact
                 highcharts={Highcharts}
                 options={options}
