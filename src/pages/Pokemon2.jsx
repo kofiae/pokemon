@@ -1,5 +1,7 @@
 import React from 'react';
-import StatTypePresence from '../charts/StatTypePresence';
+import StatMoyenParType from '../StatMoyenParType';
+import StatTypePrecenceParTier from '../charts/StatTypePresenceParTier';
+import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
@@ -11,12 +13,11 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-
 }));
 
-function Pokemon() {
+function Pokemon2() {
   const openLink = () => {
-    window.location.href = '/pokemon/2';
+    window.location.href = '/pokemon/3';
   };
   return (
     <Box
@@ -26,8 +27,17 @@ function Pokemon() {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
+        width: '100vw',
       }}
     >
+      <Stack spacing={2} direction="row">
+        <Item onClick={openLink}>
+          <StatTypePrecenceParTier />
+        </Item>
+        <Item>
+          <StatMoyenParType />
+        </Item>
+      </Stack>
       <img
         src={Pokemoni}
         alt='Background'
@@ -40,12 +50,8 @@ function Pokemon() {
           zIndex: '-1',
         }}
       />
-      <Item         onClick={openLink}
->
-        <StatTypePresence />
-      </Item>
     </Box>
   );
 }
 
-export default Pokemon;
+export default Pokemon2;

@@ -1,9 +1,10 @@
 import React from 'react';
-import StatTypePresence from '../charts/StatTypePresence';
+import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Pokemoni from '../asset/images/pokemon.jpg';
+import StartBestType from '../charts/PokemonChart';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -11,13 +12,9 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-
 }));
 
-function Pokemon() {
-  const openLink = () => {
-    window.location.href = '/pokemon/2';
-  };
+function Pokemon3() {
   return (
     <Box
       sx={{
@@ -25,9 +22,15 @@ function Pokemon() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        height: '100vh', // Set height to 100vh to fill the entire vertical height of the viewport
+        width: '100vw', // Set width to 100vw to fill the entire horizontal width of the viewport
       }}
     >
+      <Stack spacing={1}>
+        <Item style={{ height: '100%'}}>
+          <StartBestType />
+        </Item>
+      </Stack>
       <img
         src={Pokemoni}
         alt='Background'
@@ -40,12 +43,8 @@ function Pokemon() {
           zIndex: '-1',
         }}
       />
-      <Item         onClick={openLink}
->
-        <StatTypePresence />
-      </Item>
     </Box>
   );
 }
 
-export default Pokemon;
+export default Pokemon3;

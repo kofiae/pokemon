@@ -76,6 +76,7 @@ function StatTypePresence() {
     const options = {
         chart: {
             type: "pie",
+            height: "90%"
         },
         title: {
             text: "Répartition générales des types",

@@ -110,7 +110,7 @@ function StatTypePresence() {
             />
             {tiers.map((tier) => (
                 
-                <a href={`/pokemon?tier=${tier}`}>
+                <a href={`/pokemon/2?tier=${tier}`}>
                     <Button style={{ backgroundColor: "white", color: "black", border: "1px solid", margin: "10px"}}>
                         {tier}
                     </Button>

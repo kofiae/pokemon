@@ -98,7 +98,8 @@ function StartBestType() {
 
     const options = {
         chart: {
-            type: 'bar'
+            type: 'bar',
+            height: "90%",
         },
         title: {
             text: 'Classement des types de Pokémon en fonction de leur pertinence stratégique dans les tiers'
